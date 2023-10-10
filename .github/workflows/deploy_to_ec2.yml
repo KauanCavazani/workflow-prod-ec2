@@ -1,12 +1,13 @@
 name: Deplpoy to EC2
 
 on:
-  push:
-    branches:
-      - master
+  pull_request_review:
+    types:
+      - submitted
 
 jobs:
   deploy:
+    if: github.event_name == 'pull_request_review' && github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main'
     name: Deploy to EC2 on master branch push
     runs-on: ubuntu-latest
 
