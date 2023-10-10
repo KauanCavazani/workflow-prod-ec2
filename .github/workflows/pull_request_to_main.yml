@@ -1,0 +1,23 @@
+name: Pull Request to main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Configurar ambiente
+        run: npm install
+
+      - name: Qualidade do código
+        run: npm run lint
+
+      - name: Iniciar servidor de desenvolvimento
+        run: npm run build
