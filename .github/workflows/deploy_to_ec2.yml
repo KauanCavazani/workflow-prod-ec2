@@ -13,16 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          ARGS: "-rltgoDzvO --delete"
-          SOURCE: "./"
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
-          EXCLUDE: "/dist/, /node_modules/, **.env"
+    - name: Transfer files to VM
+      run: |
+        rsync -av --filter='- .git/' --exclude '/node_modules' --exclude '/.env' ./ ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:/home/ubuntu/projeto-worflow/
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        
+    - name: SSH into VM and run npm install and npm run build
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} \
+        ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} \
+        "cd /home/ubuntu/projeto-worflow && npm install && npm run build"
