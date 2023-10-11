@@ -1,24 +1,48 @@
 name: Deplpoy to EC2
 
 on:
-  push:
+  pull_request:
     branches:
-      - master
+      - main
+    types: [closed]
 
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true
     name: Deploy to EC2 on master branch push
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
+    - name: Copy files to server
+      uses: easingthemes/ssh-deploy@main
+      env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "./"
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
           EXCLUDE: "/dist/, /node_modules/, **.env"
+
+    - name: Connect SSH and build the app
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script_stop: true
+          script: |
+              cd workflow-prod-ec2
+              node -v
+              npm -v
+              echo "PATH=$PATH"
+              npm i
+              npm run build
+              sudo npm install -g serve --unsafe-perm=true --allow-root
+              sudo npm install pm2
+              pm2 serve dist 3000 --name "my-app"
+
