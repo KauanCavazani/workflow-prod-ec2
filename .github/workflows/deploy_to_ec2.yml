@@ -44,5 +44,6 @@ jobs:
               npm run build
               sudo npm install -g serve --unsafe-perm=true --allow-root
               sudo npm install pm2
+              pm2 delete "my-app"
               pm2 serve dist 3000 --name "my-app"
 
