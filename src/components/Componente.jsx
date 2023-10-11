@@ -1,4 +1,4 @@
-function component({ texto }) {
+function Componente({ texto }) {
     return (
         <>
             <p>{ texto }</p>
@@ -6,4 +6,4 @@ function component({ texto }) {
     )
 }
 
-export default component;
+export default Componente;

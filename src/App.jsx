@@ -1,11 +1,11 @@
-import component from "./components/component"
+import Componente from "./components/Componente"
 
 function App() {
 
   return (
     <>
       <h1>Bem vindo!</h1>
-      <component texto="Eu sou um componente" />
+      <Componente texto="Eu sou um componente" />
       <p>1.0</p>
     </>
   )
