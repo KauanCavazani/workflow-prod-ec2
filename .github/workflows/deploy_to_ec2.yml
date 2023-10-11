@@ -42,6 +42,9 @@ jobs:
           script_stop: true
           script: |
               cd workflow-prod-ec2
+              node -v
+              npm -v
+              echo "PATH=$PATH"
               npm i
               npm run build
               npm install -g serve
