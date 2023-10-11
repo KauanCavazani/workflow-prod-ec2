@@ -47,5 +47,5 @@ jobs:
               echo "PATH=$PATH"
               npm i
               npm run build
-              npm install -g serve
+              sudo npm install -g serve --unsafe-perm=true --allow-root
               serve -s dist
