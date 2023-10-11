@@ -44,5 +44,6 @@ jobs:
               npm run build
               sudo npm install -g serve --unsafe-perm=true --allow-root
               sudo npm install -g pm2 --unsafe-perm=true --allow-root
+              npm install uuid@latest
               pm2 start server --name=meu-app -s dist
 
