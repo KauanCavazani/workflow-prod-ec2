@@ -27,6 +27,17 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
           EXCLUDE: "/dist/, /node_modules/, **.env"
 
-    - name: SSH into EC2 and deploy
-      run: |
-        ssh -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd workflow-prod-ec2 && npm install && npm run build"
+    - name: Connect SSH and build the app
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script_stop: true
+          script: |
+              cd workflow-prod-ec2
+              npm i
+              npm run build
+              npm install -g serve
+              serve -s dist
