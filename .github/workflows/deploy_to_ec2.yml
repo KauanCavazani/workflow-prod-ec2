@@ -43,5 +43,5 @@ jobs:
               npm i
               npm run build
               sudo npm install -g serve --unsafe-perm=true --allow-root
-              nohup serve -s dist &
-              sleep 10
+              serve -s dist & 
+              echo "Servidor iniciado"
