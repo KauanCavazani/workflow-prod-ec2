@@ -9,7 +9,7 @@ function App() {
       <Componente texto="Eu sou um componenteee!!" />
       <Componente2 texto="Eu sou o segundo componente!@!" />
       <p>1.0</p>
-    </>
+    </> 
   )
 }
 
