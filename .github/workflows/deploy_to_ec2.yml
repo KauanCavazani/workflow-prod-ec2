@@ -21,10 +21,10 @@ jobs:
       with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           source: "dist"
           target: ${{ secrets.TARGET_DIR }}
 
     - name: SSH into EC2 and deploy
       run: |
-        ssh -i ${{ secrets.EC2_PRIVATE_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd workflow-prod-ec2 && npm install && npm run build"
+        ssh -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd workflow-prod-ec2 && npm install && npm run build"
