@@ -45,4 +45,4 @@ jobs:
               sudo npm install -g serve --unsafe-perm=true --allow-root
               nohup serve -s dist &
               sleep 10
-              exit
+              exit 0
