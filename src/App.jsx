@@ -8,6 +8,7 @@ function App() {
       <h1>Bem vindo!</h1>
       <Componente texto="Eu sou um componenteee!!" />
       <Componente2 texto="Eu sou o segundo componente!!!" />
+      <p>Oi leo</p>
       <p>3.1</p>   
     </> 
   )
