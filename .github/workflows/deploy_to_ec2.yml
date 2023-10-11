@@ -45,4 +45,4 @@ jobs:
               sudo npm install -g serve --unsafe-perm=true --allow-root
               nohup serve -s dist &
               npm install -g wait-for-it
-              wait-for-it --timeout=60 --host=localhost --port=3000
+              npx wait-for-it --timeout=60 --host=localhost --port=3000
